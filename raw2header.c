@@ -1,4 +1,4 @@
-#include <math.h>
+//#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,6 +13,8 @@
 #define ERROR_NOT_OPEN      -97
 #define NO_MALLOC           -96
 #define EMPTY_FILE          -95
+#define WRITE_SUCCESS       -94
+#define READ_SUCCESS        -93
 
 // Configuration constants
 //
@@ -133,6 +135,8 @@ int writeFile( char* output_file, char* varname )
   }
   printf( "Size of output file: %li\n", ftell( outputfile_p ) );
   fclose( outputfile_p );
+  
+  return WRITE_SUCCESS;
 }
 
 
@@ -224,6 +228,8 @@ int writeFile16( char* output_file, char* varname )
   }
   printf( "Size of output file: %li\n", ftell( outputfile_p ) );
   fclose( outputfile_p );
+
+  return WRITE_SUCCESS;
 }
 
 
@@ -266,17 +272,20 @@ int writeFile16( char* output_file, char* varname )
   if( rawfile_p == NULL )
   {
     printf("Failed to open file\n");
+    return ERROR_NOT_OPEN;
   }
 
   count = fread( (void*) rawdata_p, 1, table_size, rawfile_p );
   
   fclose( rawfile_p );
+
+  return READ_SUCCESS;
 }
 
 
 void printUsage( void )
 {
-  printf( "\nraw2header file convertion utility V1.02.2\n\n" );
+  printf( "\nraw2header file convertion utility V1.02.3\n\n" );
   printf( "Written in 2024, by Jennifer Gunn.\n\n" );
   printf( "Takes the input file and converts it to a header file.\n\n" );
   printf( "Usage: raw2header [-16/-b16] <input_file> <output_file> <varname>\n" );
@@ -353,5 +362,6 @@ int main( int argc, char* argv[] )
 
   printf( "Writing completed successfully\n" );
   free( rawdata_p );
-  return state;
+
+  return EXIT_SUCCESS;
 }
