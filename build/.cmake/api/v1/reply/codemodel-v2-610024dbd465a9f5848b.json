@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-c077db496ea4013a80eb.json",
+					"jsonFile" : "directory-.-Debug-dc9b4aac598ee9cc4622.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.22"
@@ -20,7 +20,7 @@
 					]
 				}
 			],
-			"name" : "",
+			"name" : "Debug",
 			"projects" : 
 			[
 				{
@@ -40,7 +40,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "raw2header::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-raw2header-6ab38e9c84dc335a0cba.json",
+					"jsonFile" : "target-raw2header-Debug-a37ce5ebd71cf04461bf.json",
 					"name" : "raw2header",
 					"projectIndex" : 0
 				}

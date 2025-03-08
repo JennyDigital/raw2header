@@ -15,6 +15,8 @@
 #define EMPTY_FILE          -95
 #define WRITE_SUCCESS       -94
 #define READ_SUCCESS        -93
+#define FILE_NOT_FOUND      -92
+
 
 // Configuration constants
 //
@@ -48,13 +50,11 @@ off_t getFileSize ( char* file_to_size )
 {
   long int fsize;
 
-  #define BAD_FILENAME    -1
-
   rawfile_p = fopen( file_to_size, "r" );
   if (rawfile_p == NULL)
   { 
     printf("File Not Found!\n");
-    return -1; 
+    return FILE_NOT_FOUND; 
   } 
   fseek( rawfile_p, 0L, SEEK_END ); 
   fsize =  ftell( rawfile_p );
@@ -245,9 +245,9 @@ int writeFile16( char* output_file, char* varname )
     
   table_size = getFileSize( input_file );
   
-  if( table_size == BAD_FILENAME )
+  if( table_size == FILE_NOT_FOUND )
   {
-    printf( "Bad input file!\n" );
+    printf( "Bad input file or no file found!\n" );
     return ERROR_NOT_OPEN;
   }
 
@@ -285,7 +285,7 @@ int writeFile16( char* output_file, char* varname )
 
 void printUsage( void )
 {
-  printf( "\nraw2header file convertion utility V1.02.3\n\n" );
+  printf( "\nraw2header file convertion utility V1.02.4\n\n" );
   printf( "Written in 2024, by Jennifer Gunn.\n\n" );
   printf( "Takes the input file and converts it to a header file.\n\n" );
   printf( "Usage: raw2header [-16/-b16] <input_file> <output_file> <varname>\n" );
@@ -360,7 +360,7 @@ int main( int argc, char* argv[] )
     return state;
   }
 
-  printf( "Writing completed successfully\n" );
+  printf( "Header file completed successfully\n" );
   free( rawdata_p );
 
   return EXIT_SUCCESS;

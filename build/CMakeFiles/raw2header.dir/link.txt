@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/raw2header.dir/raw2header.c.o -o raw2header 
+/usr/bin/gcc-12 -g CMakeFiles/raw2header.dir/raw2header.c.o -o raw2header 
