@@ -4,6 +4,7 @@
 CMakeFiles/raw2header.dir/raw2header.c.o
  /home/jennifer/repos/raw2header/raw2header.c
  /usr/include/alloca.h
+ /usr/include/ctype.h
  /usr/include/endian.h
  /usr/include/features-time64.h
  /usr/include/features.h

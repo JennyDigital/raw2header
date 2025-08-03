@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <ctype.h>
 
 // Error Codes
 //
@@ -82,7 +83,7 @@ int writeFile( char* output_file, char* varname )
 
   while( *st_p != 0 )
   {
-    *st_p &= *st_p & 0xDF;
+    *st_p = toupper(*st_p);// & 0xDF;
     st_p++;
   }
 
@@ -159,7 +160,7 @@ int writeFile16( char* output_file, char* varname )
 
   while( *st_p != 0 )
   {
-    *st_p &= *st_p & 0xDF;
+    *st_p = toupper(*st_p);// & 0xDF;
     st_p++;
   }
 
@@ -285,7 +286,7 @@ int writeFile16( char* output_file, char* varname )
 
 void printUsage( void )
 {
-  printf( "\nraw2header file convertion utility V1.02.4\n\n" );
+  printf( "\nraw2header file convertion utility V1.02.5\n\n" );
   printf( "Written in 2024, by Jennifer Gunn.\n\n" );
   printf( "Takes the input file and converts it to a header file.\n\n" );
   printf( "Usage: raw2header [-16/-b16] <input_file> <output_file> <varname>\n" );
