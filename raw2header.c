@@ -51,7 +51,7 @@ off_t getFileSize ( char* file_to_size )
 {
   long int fsize;
 
-  rawfile_p = fopen( file_to_size, "r" );
+  rawfile_p = fopen( file_to_size, "rb" );
   if (rawfile_p == NULL)
   { 
     printf("File Not Found!\n");
@@ -60,7 +60,13 @@ off_t getFileSize ( char* file_to_size )
   fseek( rawfile_p, 0L, SEEK_END ); 
   fsize =  ftell( rawfile_p );
   fclose( rawfile_p );
-  
+
+  if (fsize < 0)
+  {
+    printf("Error getting file size\n");
+    return -1;
+  }
+
   return fsize;
 }
 
@@ -239,7 +245,7 @@ int writeFile16( char* output_file, char* varname )
   * @param char* input filename */
  int getRaw( char* input_file )
  {
-  off_t count;
+  off_t count = 0;
 
   if( strlen( input_file )  < 1 ) return INVALID_FN;
   printf( "IF: %s.  ", input_file );
@@ -269,7 +275,7 @@ int writeFile16( char* output_file, char* varname )
     printf( "Failed to get required memory.\n" );
     return NO_MALLOC;
   }
-  rawfile_p = fopen( input_file, "r" );
+  rawfile_p = fopen( input_file, "rb" );
   if( rawfile_p == NULL )
   {
     printf("Failed to open file\n");
@@ -277,6 +283,11 @@ int writeFile16( char* output_file, char* varname )
   }
 
   count = fread( (void*) rawdata_p, 1, table_size, rawfile_p );
+  if( count != table_size )
+  {
+    printf( "Error reading file\n" );
+    return ERROR_NOT_OPEN;
+  }
   
   fclose( rawfile_p );
 
@@ -286,7 +297,7 @@ int writeFile16( char* output_file, char* varname )
 
 void printUsage( void )
 {
-  printf( "\nraw2header file convertion utility V1.02.5\n\n" );
+  printf( "\nraw2header file convertion utility V1.02.6\n\n" );
   printf( "Written in 2024, by Jennifer Gunn.\n\n" );
   printf( "Takes the input file and converts it to a header file.\n\n" );
   printf( "Usage: raw2header [-16/-b16] <input_file> <output_file> <varname>\n" );

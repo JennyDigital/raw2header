@@ -67,7 +67,7 @@ CMakeFiles/raw2header.dir/raw2header.c.o
  /usr/include/x86_64-linux-gnu/sys/select.h
  /usr/include/x86_64-linux-gnu/sys/stat.h
  /usr/include/x86_64-linux-gnu/sys/types.h
- /usr/lib/gcc/x86_64-linux-gnu/12/include/stdarg.h
- /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h
- /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h
+ /usr/lib/gcc/x86_64-linux-gnu/14/include/stdarg.h
+ /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h
+ /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
 

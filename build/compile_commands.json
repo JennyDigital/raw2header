@@ -1,7 +1,7 @@
 [
 {
   "directory": "/home/jennifer/repos/raw2header/build",
-  "command": "/usr/bin/gcc-12 -g -o CMakeFiles/raw2header.dir/raw2header.c.o -c /home/jennifer/repos/raw2header/raw2header.c",
+  "command": "/usr/bin/gcc -g -o CMakeFiles/raw2header.dir/raw2header.c.o -c /home/jennifer/repos/raw2header/raw2header.c",
   "file": "/home/jennifer/repos/raw2header/raw2header.c",
   "output": "CMakeFiles/raw2header.dir/raw2header.c.o"
 }
