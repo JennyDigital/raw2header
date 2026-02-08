@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/jennifer/repos/raw2header/raw2header.c" "CMakeFiles/raw2header.dir/raw2header.c.o" "gcc" "CMakeFiles/raw2header.dir/raw2header.c.o.d"
+  "/Users/duncangunn/repos/raw2header/raw2header.c" "CMakeFiles/raw2header.dir/raw2header.c.o" "gcc" "CMakeFiles/raw2header.dir/raw2header.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

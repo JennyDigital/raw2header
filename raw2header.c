@@ -387,7 +387,7 @@ void printUsage( void )
   printf( "little endian uint16_t array.\n\n" );
   printf( "--pad=NN or --pad=0xNN appends one byte for odd sized files.\n\n" );
   printf( "--mono/-m or --stereo/-s emits a mode define in the output header.\n\n" );
-  printf( "uint16_t arrays require an even sized file.\n\n" );
+  printf( "uint16_t arrays require an even sized file unless padding is enabled.\n\n" );
 }
 
 
