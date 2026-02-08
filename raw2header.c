@@ -653,7 +653,7 @@ int main( int argc, char* argv[] )
     }
     else
     {
-      fprintf( stderr, "\nError: uint16_t modes require an even sized file\n\n" );
+      fprintf( stderr, "\nError: uint16_t modes require an even sized file or --pad=NN\n\n" );
       printUsage();
       return EXIT_FAILURE;
     }
