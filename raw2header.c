@@ -1,4 +1,3 @@
-//#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,6 +38,8 @@ FILE *    rawfile_p;
 uint8_t   wordmode          = 0;
 uint8_t   bigendian         = 0;
 uint8_t   channelmode       = MODE_NONE;
+uint8_t   pad_enabled       = 0;
+uint8_t   pad_value         = 0;
 
 // Private function declarations
 //
@@ -48,6 +49,8 @@ off_t getFileSize ( char* input_file );
 void  printUsage  ( void );
 int   parseArgs   ( int argc, char** argv, char** input, char** output, char** varname );
 void  printSystemError( const char* context, const char* path );
+int   parseCombinedShortFlags( const char* arg );
+int   parsePadFlag( const char* arg );
 
 
 /** Get the size of the named file
@@ -302,7 +305,9 @@ int writeFile16( char* output_file, char* varname )
 
 /** Read in the file to be converted to the header
   *
-  * @param char* input filename */
+  * @param char* input filename to read
+  * @retval int status code
+  */
  int getRaw( char* input_file )
  {
   size_t count = 0;
@@ -369,60 +374,203 @@ int writeFile16( char* output_file, char* varname )
 }
 
 
+/**
+  * Prints usage information for the raw2header utility.
+  */
 void printUsage( void )
 {
-  printf( "\nraw2header file convertion utility V2.00.0\n\n" );
+  printf( "\nraw2header file convertion utility V2.01.0\n\n" );
   printf( "Written in 2024, by Jennifer Gunn.\n\n" );
   printf( "Takes the input file and converts it to a header file.\n\n" );
   printf( "Usage: raw2header [--mono|-m|--stereo|-s] [-16/-b16] <input_file> <output_file> <varname>\n" );
   printf( "where -b16 generate a big-endian uint16_t and -16 generates a\n" );
   printf( "little endian uint16_t array.\n\n" );
+  printf( "--pad=NN or --pad=0xNN appends one byte for odd sized files.\n\n" );
   printf( "--mono/-m or --stereo/-s emits a mode define in the output header.\n\n" );
   printf( "uint16_t arrays require an even sized file.\n\n" );
 }
 
 
+/**
+  * Parses combined short flags like -ms for mono and stereo.
+  * @param arg The command-line argument string starting with a single dash followed by multiple characters.
+  * @retval int status code: 0 on success, 1 for help, -1 on invalid flag
+  * This function iterates through each character in the combined short flags and sets the appropriate
+  * configuration variables. It returns 1 if the help flag is encountered, -1 if an invalid flag is found,
+  * and 0 if all flags are processed successfully.
+  */
+int parseCombinedShortFlags( const char* arg )
+{
+  // Parses combined short flags like -ms; returns 1 for help, -1 on invalid.
+  const char* shortflags = arg + 1;
+
+  while( *shortflags != '\0' )
+  {
+    switch( *shortflags )
+    {
+      case 'm':
+        channelmode = MODE_MONO;
+        break;
+      case 's':
+        channelmode = MODE_STEREO;
+        break;
+      case 'h':
+        return 1;
+      default:
+        return -1;
+    }
+    shortflags++;
+  }
+
+  return 0;
+}
+
+
+/**
+  * Parses the --pad=NN flag to enable padding for odd byte counts in uint16_t modes.
+  * @param arg The command-line argument string starting with "--pad=".
+  * @retval int status code: 0 on success, -1 on invalid format or value
+  * This function extracts the padding byte value from the argument, validates it, and sets the global
+  * padding configuration. The padding byte must be a valid hexadecimal value between 0x00 and 0xFF.
+  */
+int parsePadFlag( const char* arg )
+{
+  // Parses --pad=NN or --pad=0xNN (hex) and stores the padding byte.
+  const char* pad_text = arg + 6;
+  char* endptr = 0;
+  unsigned long pad = 0;
+
+  if( pad_text[0] == '\0' )
+  {
+    return -1;
+  }
+
+  pad = strtoul( pad_text, &endptr, 16 );
+  if( endptr == pad_text || *endptr != '\0' || pad > 0xFF )
+  {
+    return -1;
+  }
+
+  pad_enabled = 1;
+  pad_value = (uint8_t) pad;
+  return 0;
+}
+
+
+/**
+ * Parses command-line arguments and sets configuration variables.
+ * @param argc Argument count from main.
+ * @param argv Argument vector from main.
+ * @param input Output pointer for input filename.
+ * @param output Output pointer for output filename.
+ * @param varname Output pointer for variable name in the header.
+ * @retval int status code: 0 on success, 1 for help, -1 for invalid flag, -2 for missing positional args.
+ * This function processes flags in any order before the three required positional arguments (input_file,
+ * output_file, varname). It supports combined short flags
+ */
 int parseArgs( int argc, char** argv, char** input, char** output, char** varname )
 {
   int i = 1;
+  size_t option = 0;
 
+  // Define an enumeration for the possible actions corresponding to command-line flags.
+  typedef enum
+  {
+    OPT_WORD_LE,
+    OPT_WORD_BE,
+    OPT_HELP,
+    OPT_MONO,
+    OPT_STEREO
+  } option_action_t;
+
+  // Define a structure to map command-line flags to their corresponding actions.
+  typedef struct
+  {
+    const char* flag;
+    option_action_t action;
+  } option_map_t;
+
+  // Define the mapping of command-line flags to actions.
+  const option_map_t options[] = {
+    { "-16",      OPT_WORD_LE },  // 16-bit little-endian output
+    { "-b16",     OPT_WORD_BE },  // 16-bit big-endian output
+    { "-h",       OPT_HELP },     // short help
+    { "--help",   OPT_HELP },     // long help
+    { "--mono",   OPT_MONO },     // mono mode define
+    { "-m",       OPT_MONO },     // mono mode define (short)
+    { "--stereo", OPT_STEREO },   // stereo mode define
+    { "-s",       OPT_STEREO }    // stereo mode define (short)
+  };
+
+  // Calculate the number of options in the table.
+  const size_t options_count = sizeof( options ) / sizeof( options[0] );
+
+  // Initialize defaults.
   wordmode = 0;
   bigendian = 0;
   channelmode = MODE_NONE;
+  pad_enabled = 0;
+  pad_value = 0;
 
   // Consume leading flags before positional args.
   while( i < argc && argv[i][0] == '-' )
   {
-    if( strcmp( argv[i], "-16" ) == 0 )
+    if( strncmp( argv[i], "--pad=", 6 ) == 0 )
     {
-      wordmode = 1;
+      int pad_state = parsePadFlag( argv[i] );
+      if( pad_state != 0 )
+      {
+        return pad_state;
+      }
+      i++;
+      continue;
     }
-    else if( strcmp( argv[i], "-b16" ) == 0 )
+
+    // Check for combined short flags like -ms.
+    if( strcmp( argv[i], "-16" ) != 0 && strcmp( argv[i], "-b16" ) != 0
+        && strncmp( argv[i], "--", 2 ) != 0 && strlen( argv[i] ) > 2 )
     {
-      wordmode = 1;
-      bigendian = 1;
+      int short_state = parseCombinedShortFlags( argv[i] );
+      if( short_state != 0 )
+      {
+        return short_state;
+      }
+
+      i++;
+      continue;
     }
-    else if( ( strcmp( argv[i], "-h" ) == 0 ) || ( strcmp( argv[i], "--help" ) == 0 ) )
+
+    // Check for matches in the options table.
+    int matched = 0;
+
+    for( option = 0; option < options_count; option++ )
     {
-      return 1;
+      if( strcmp( argv[i], options[ option ].flag ) == 0 )
+      {
+        matched = 1;
+        switch( options[ option ].action )
+        {
+          case OPT_WORD_LE:
+            wordmode = 1;
+            break;
+          case OPT_WORD_BE:
+            wordmode = 1;
+            bigendian = 1;
+            break;
+          case OPT_HELP:
+            return 1;
+          case OPT_MONO:
+            channelmode = MODE_MONO;
+            break;
+          case OPT_STEREO:
+            channelmode = MODE_STEREO;
+            break;
+        }
+        break;
+      }
     }
-    else if( strcmp( argv[i], "--mono" ) == 0 )
-    {
-      channelmode = MODE_MONO;
-    }
-    else if( strcmp( argv[i], "-m" ) == 0 )
-    {
-      channelmode = MODE_MONO;
-    }
-    else if( strcmp( argv[i], "--stereo" ) == 0 )
-    {
-      channelmode = MODE_STEREO;
-    }
-    else if( strcmp( argv[i], "-s" ) == 0 )
-    {
-      channelmode = MODE_STEREO;
-    }
-    else
+
+    if( !matched )
     {
       return -1;
     }
@@ -442,6 +590,9 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
 }
 
 
+/** Application entry point
+ * 
+ */
 int main( int argc, char* argv[] )
 {
   int state = 0;
@@ -456,32 +607,59 @@ int main( int argc, char* argv[] )
     return EXIT_FAILURE;
   }
 
+  if( pad_enabled && !wordmode )
+  {
+    // Padding only applies to uint16_t output.
+    fprintf( stderr, "Error: --pad requires -16 or -b16.\n" );
+    printUsage();
+    return EXIT_FAILURE;
+  }
+
   printf( "Processing\n");
   
   state = getRaw( input_file );
-  if( state == ERROR_NOT_OPEN )
+  switch( state )
   {
-    fprintf( stderr, "Error: could not read input file.\n" );
-    return EXIT_FAILURE;
-  }
-  if( state == EMPTY_FILE )
-  {
-    fprintf( stderr, "Error: empty file, nothing to do.\n" );
-    return EXIT_FAILURE;
-  }
-  if( state != READ_SUCCESS )
-  {
-    fprintf( stderr, "Error: failed to load input file.\n" );
-    return EXIT_FAILURE;
+    case ERROR_NOT_OPEN:
+      fprintf( stderr, "Error: could not read input file.\n" );
+      return EXIT_FAILURE;
+    case EMPTY_FILE:
+      fprintf( stderr, "Error: empty file, nothing to do.\n" );
+      return EXIT_FAILURE;
+    case READ_SUCCESS:
+      break;
+    default:
+      fprintf( stderr, "Error: failed to load input file.\n" );
+      return EXIT_FAILURE;
   }
 
   if( ( ( table_size % 2) != 0 ) && wordmode )
   {
-    fprintf( stderr, "\nError: uint16_t modes require an even sized file\n\n" );
-    printUsage();
-    return EXIT_FAILURE;
+    // Pad odd byte counts to form complete uint16_t pairs.
+    if( pad_enabled )
+    {
+      void* padded = realloc( rawdata_p, (size_t) table_size + 1 );
+      if( padded == 0 )
+      {
+        fprintf( stderr, "Error: failed to allocate padding byte.\n" );
+        free( rawdata_p );
+        rawdata_p = 0;
+        return EXIT_FAILURE;
+      }
+
+      rawdata_p = padded;
+      rawdata_p[ table_size ] = (int8_t) pad_value;
+      table_size += 1;
+    }
+    else
+    {
+      fprintf( stderr, "\nError: uint16_t modes require an even sized file\n\n" );
+      printUsage();
+      return EXIT_FAILURE;
+    }
   } 
 
+  // Write the output file.
   if( wordmode == 0 )
     state = writeFile( output_file, varname );
   else
@@ -503,6 +681,14 @@ int main( int argc, char* argv[] )
 }
 
 
+/**
+ * Prints a system error message to stderr with context and optional path.
+ * @param context Description of the operation that failed (e.g., "open file").
+ * @param path Optional file path related to the error; can be NULL.
+ * This function uses errno to provide detailed error information.
+ * Example usage:
+ *  printSystemError("open input file", "data.bin");
+ */
 void printSystemError( const char* context, const char* path )
 {
   if( path != 0 )
