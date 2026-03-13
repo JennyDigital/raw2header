@@ -106,7 +106,8 @@ int writeFile( char* output_file, char* varname )
   char outp_header_fname[255] = {0},
         outp_header_name[255] = {0};
 
-  strcpy( outp_header_name, varname );
+  strncpy( outp_header_name, varname, 254 );
+  outp_header_name[254] = '\0';
 
   st_p  = (char*) outp_header_name;
 
@@ -202,7 +203,8 @@ int writeFile16( char* output_file, char* varname )
   char outp_header_fname[255] = {0},
         outp_header_name[255] = {0};
 
-  strcpy( outp_header_name, varname );
+  strncpy( outp_header_name, varname, 254 );
+  outp_header_name[254] = '\0';
 
   st_p  = (char*) outp_header_name;
 
@@ -379,7 +381,7 @@ int writeFile16( char* output_file, char* varname )
   */
 void printUsage( void )
 {
-  printf( "\nraw2header file convertion utility V2.01.0\n\n" );
+  printf( "\nraw2header file convertion utility V2.01.1\n\n" );
   printf( "Written in 2024, by Jennifer Gunn.\n\n" );
   printf( "Takes the input file and converts it to a header file.\n\n" );
   printf( "Usage: raw2header [--mono|-m|--stereo|-s] [-16/-b16] <input_file> <output_file> <varname>\n" );
@@ -440,11 +442,13 @@ int parsePadFlag( const char* arg )
   char* endptr = 0;
   unsigned long pad = 0;
 
+  // Validate that there is padding text after the flag. Error if it's empty.
   if( pad_text[0] == '\0' )
   {
     return -1;
   }
 
+  // Convert the padding text to an unsigned long, interpreting it as hexadecimal.
   pad = strtoul( pad_text, &endptr, 16 );
   if( endptr == pad_text || *endptr != '\0' || pad > 0xFF )
   {
@@ -476,11 +480,11 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
   // Define an enumeration for the possible actions corresponding to command-line flags.
   typedef enum
   {
-    OPT_WORD_LE,
-    OPT_WORD_BE,
-    OPT_HELP,
-    OPT_MONO,
-    OPT_STEREO
+    OPT_WORD_LE,  // 16-bit little-endian output
+    OPT_WORD_BE,  // 16-bit big-endian output
+    OPT_HELP,     // Display help information
+    OPT_MONO,     // Mono mode define. Used when the data is mono audio data
+    OPT_STEREO    // Stereo mode define. Used when the data is stereo audio data
   } option_action_t;
 
   // Define a structure to map command-line flags to their corresponding actions.
@@ -582,9 +586,9 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
     return -2;
   }
 
-  *input = argv[i];
-  *output = argv[i + 1];
-  *varname = argv[i + 2];
+  *input    = argv[i];
+  *output   = argv[i + 1];
+  *varname  = argv[i + 2];
 
   return 0;
 }
