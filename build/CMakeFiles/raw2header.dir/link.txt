@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/raw2header.dir/raw2header.c.o -o raw2header 
+/usr/bin/cc -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/raw2header.dir/raw2header.c.o -o raw2header
