@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/jennifer/repos/raw2header/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	/home/jennifer/st/stm32cubeclt_1.20.0/CMake/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
@@ -174,6 +184,46 @@ raw2header/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/build
 .PHONY : raw2header/fast
 
+#=============================================================================
+# Target rules for targets named test_adpcm
+
+# Build rule for target.
+test_adpcm: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_adpcm
+.PHONY : test_adpcm
+
+# fast build rule for target.
+test_adpcm/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/build
+.PHONY : test_adpcm/fast
+
+adpcm.o: adpcm.c.o
+.PHONY : adpcm.o
+
+# target to build an object file
+adpcm.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/adpcm.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/adpcm.c.o
+.PHONY : adpcm.c.o
+
+adpcm.i: adpcm.c.i
+.PHONY : adpcm.i
+
+# target to preprocess a source file
+adpcm.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/adpcm.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/adpcm.c.i
+.PHONY : adpcm.c.i
+
+adpcm.s: adpcm.c.s
+.PHONY : adpcm.s
+
+# target to generate assembly for a file
+adpcm.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/adpcm.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/adpcm.c.s
+.PHONY : adpcm.c.s
+
 raw2header.o: raw2header.c.o
 .PHONY : raw2header.o
 
@@ -198,6 +248,30 @@ raw2header.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/raw2header.c.s
 .PHONY : raw2header.c.s
 
+test_adpcm.o: test_adpcm.c.o
+.PHONY : test_adpcm.o
+
+# target to build an object file
+test_adpcm.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/test_adpcm.c.o
+.PHONY : test_adpcm.c.o
+
+test_adpcm.i: test_adpcm.c.i
+.PHONY : test_adpcm.i
+
+# target to preprocess a source file
+test_adpcm.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/test_adpcm.c.i
+.PHONY : test_adpcm.c.i
+
+test_adpcm.s: test_adpcm.c.s
+.PHONY : test_adpcm.s
+
+# target to generate assembly for a file
+test_adpcm.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/test_adpcm.c.s
+.PHONY : test_adpcm.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -210,10 +284,18 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... raw2header"
+	@echo "... test_adpcm"
+	@echo "... adpcm.o"
+	@echo "... adpcm.i"
+	@echo "... adpcm.s"
 	@echo "... raw2header.o"
 	@echo "... raw2header.i"
 	@echo "... raw2header.s"
+	@echo "... test_adpcm.o"
+	@echo "... test_adpcm.i"
+	@echo "... test_adpcm.s"
 .PHONY : help
 
 

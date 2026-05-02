@@ -1,0 +1,39 @@
+Start testing: May 02 09:59 BST
+----------------------------------------------------------
+1/1 Testing: ADPCM
+1/1 Test: ADPCM
+Command: "/home/jennifer/repos/raw2header/build/test_adpcm"
+Directory: /home/jennifer/repos/raw2header/build
+"ADPCM" start time: May 02 09:59 BST
+Output:
+----------------------------------------------------------
+=== IMA ADPCM Encoder Test Suite ===
+
+Test 1: Output size verification
+  PASS: Output size is correct (5 bytes)
+Test 2: Odd-sized input handling
+  PASS: Odd-sized input handled correctly (6 bytes)
+Test 3: 8-bit input encoding
+  PASS: 8-bit input encoded to 4 bytes
+Test 4: Round-trip encode/decode verification
+  Encoded to 16 bytes
+  RMS reconstruction error: 3035.96
+  PASS: Reconstruction error within acceptable range
+Test 5: Silence encoding
+  PASS: Silence encoded correctly
+Test 6: NULL input handling
+  PASS: NULL input handled correctly
+Test 7: Zero-size input handling
+  PASS: Zero-size input handled correctly
+
+=== Test Results ===
+Passed: 7/7
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"ADPCM" end time: May 02 09:59 BST
+"ADPCM" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: May 02 09:59 BST

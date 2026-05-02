@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <ctype.h>
 #include <errno.h>
+#include "adpcm.h"
 
 // Error Codes
 //
@@ -40,6 +41,7 @@ uint8_t   bigendian         = 0;
 uint8_t   channelmode       = MODE_NONE;
 uint8_t   pad_enabled       = 0;
 uint8_t   pad_value         = 0;
+uint8_t   adpcm_enabled     = 0;
 
 // Private function declarations
 //
@@ -135,8 +137,16 @@ int writeFile( char* output_file, char* varname )
   if( channelmode != MODE_NONE )
   {
     // Optional mode macro for downstream selection.
-    fprintf( outputfile_p, "#define %s_PB_FMT Mode_%s\n", outp_header_name,
-             ( channelmode == MODE_MONO ) ? "mono" : "stereo" );
+    if( adpcm_enabled )
+    {
+      fprintf( outputfile_p, "#define %s_PB_FMT Mode_%s_ADPCM\n", outp_header_name,
+               ( channelmode == MODE_MONO ) ? "mono" : "stereo" );
+    }
+    else
+    {
+      fprintf( outputfile_p, "#define %s_PB_FMT Mode_%s\n", outp_header_name,
+               ( channelmode == MODE_MONO ) ? "mono" : "stereo" );
+    }
   }
   fprintf( outputfile_p, "#define %s_SZ %li\n\n",outp_header_name, table_size );
   fprintf( outputfile_p, "const uint8_t %s[ %s_SZ ] =\n{\n", varname, outp_header_name );
@@ -243,8 +253,16 @@ int writeFile16( char* output_file, char* varname )
   if( channelmode != MODE_NONE )
   {
     // Optional mode macro for downstream selection.
-    fprintf( outputfile_p, "#define %s_PB_FMT Mode_%s\n", outp_header_name,
-             ( channelmode == MODE_MONO ) ? "mono" : "stereo" );
+    if( adpcm_enabled )
+    {
+      fprintf( outputfile_p, "#define %s_PB_FMT Mode_%s_ADPCM\n", outp_header_name,
+               ( channelmode == MODE_MONO ) ? "mono" : "stereo" );
+    }
+    else
+    {
+      fprintf( outputfile_p, "#define %s_PB_FMT Mode_%s\n", outp_header_name,
+               ( channelmode == MODE_MONO ) ? "mono" : "stereo" );
+    }
   }
   fprintf( outputfile_p, "#define %s_SZ %li\n\n",outp_header_name, table_size / 2 );
   fprintf( outputfile_p, "const uint16_t %s[ %s_SZ ] =\n{\n", varname, outp_header_name );
@@ -381,15 +399,19 @@ int writeFile16( char* output_file, char* varname )
   */
 void printUsage( void )
 {
-  printf( "\nraw2header file convertion utility V2.01.1\n\n" );
+  printf( "\nraw2header file convertion utility V3.00.1\n\n" );
   printf( "Written in 2024, by Jennifer Gunn.\n\n" );
   printf( "Takes the input file and converts it to a header file.\n\n" );
-  printf( "Usage: raw2header [--mono|-m|--stereo|-s] [-16/-b16] <input_file> <output_file> <varname>\n" );
+  printf( "Usage: raw2header [--mono|-m|--stereo|-s] [-16/-b16] [--adpcm|-a|-a16|-ab16] <input_file> <output_file> <varname>\n" );
   printf( "where -b16 generate a big-endian uint16_t and -16 generates a\n" );
   printf( "little endian uint16_t array.\n\n" );
+  printf( "--adpcm/-a encodes the input as IMA ADPCM and stores it as a uint8_t array.\n" );
+  printf( "With --adpcm, -16/-b16 select 16-bit PCM input endianness.\n" );
+  printf( "-a16/--adpcm16 and -ab16/--adpcm16be are one-step ADPCM + 16-bit PCM input flags.\n\n" );
   printf( "--pad=NN or --pad=0xNN appends one byte for odd sized files.\n\n" );
   printf( "--mono/-m or --stereo/-s emits a mode define in the output header.\n\n" );
   printf( "uint16_t arrays require an even sized file unless padding is enabled.\n\n" );
+  printf( "For ADPCM with 8-bit PCM input, omit -16/-b16.\n\n" );
 }
 
 
@@ -415,6 +437,9 @@ int parseCombinedShortFlags( const char* arg )
         break;
       case 's':
         channelmode = MODE_STEREO;
+        break;
+      case 'a':
+        adpcm_enabled = 1;
         break;
       case 'h':
         return 1;
@@ -484,7 +509,10 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
     OPT_WORD_BE,  // 16-bit big-endian output
     OPT_HELP,     // Display help information
     OPT_MONO,     // Mono mode define. Used when the data is mono audio data
-    OPT_STEREO    // Stereo mode define. Used when the data is stereo audio data
+    OPT_STEREO,   // Stereo mode define. Used when the data is stereo audio data
+    OPT_ADPCM,    // IMA ADPCM output
+    OPT_ADPCM16_LE, // IMA ADPCM output with 16-bit PCM LE input
+    OPT_ADPCM16_BE  // IMA ADPCM output with 16-bit PCM BE input
   } option_action_t;
 
   // Define a structure to map command-line flags to their corresponding actions.
@@ -503,7 +531,13 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
     { "--mono",   OPT_MONO },     // mono mode define
     { "-m",       OPT_MONO },     // mono mode define (short)
     { "--stereo", OPT_STEREO },   // stereo mode define
-    { "-s",       OPT_STEREO }    // stereo mode define (short)
+    { "-s",       OPT_STEREO },   // stereo mode define (short)
+    { "--adpcm",  OPT_ADPCM },    // IMA ADPCM output
+    { "-a",       OPT_ADPCM },    // IMA ADPCM output (short)
+    { "--adpcm16",   OPT_ADPCM16_LE }, // ADPCM with 16-bit LE PCM input
+    { "--adpcm16be", OPT_ADPCM16_BE }, // ADPCM with 16-bit BE PCM input
+    { "-a16",        OPT_ADPCM16_LE }, // ADPCM with 16-bit LE PCM input
+    { "-ab16",       OPT_ADPCM16_BE }  // ADPCM with 16-bit BE PCM input
   };
 
   // Calculate the number of options in the table.
@@ -515,6 +549,7 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
   channelmode = MODE_NONE;
   pad_enabled = 0;
   pad_value = 0;
+  adpcm_enabled = 0;
 
   // Consume leading flags before positional args.
   while( i < argc && argv[i][0] == '-' )
@@ -532,6 +567,7 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
 
     // Check for combined short flags like -ms.
     if( strcmp( argv[i], "-16" ) != 0 && strcmp( argv[i], "-b16" ) != 0
+      && strcmp( argv[i], "-a16" ) != 0 && strcmp( argv[i], "-ab16" ) != 0
         && strncmp( argv[i], "--", 2 ) != 0 && strlen( argv[i] ) > 2 )
     {
       int short_state = parseCombinedShortFlags( argv[i] );
@@ -569,6 +605,19 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
           case OPT_STEREO:
             channelmode = MODE_STEREO;
             break;
+          case OPT_ADPCM:
+            adpcm_enabled = 1;
+            break;
+          case OPT_ADPCM16_LE:
+            adpcm_enabled = 1;
+            wordmode = 1;
+            bigendian = 0;
+            break;
+          case OPT_ADPCM16_BE:
+            adpcm_enabled = 1;
+            wordmode = 1;
+            bigendian = 1;
+            break;
         }
         break;
       }
@@ -581,7 +630,7 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
     i++;
   }
 
-  if( ( argc - i ) < 3 )
+  if( ( argc - i ) != 3 )
   {
     return -2;
   }
@@ -605,6 +654,12 @@ int main( int argc, char* argv[] )
   char* varname = 0;
 
   state = parseArgs( argc, argv, &input_file, &output_file, &varname );
+  if( state == 1 )
+  {
+    printUsage();
+    return EXIT_SUCCESS;
+  }
+
   if( state != 0 )
   {
     printUsage();
@@ -619,7 +674,7 @@ int main( int argc, char* argv[] )
     return EXIT_FAILURE;
   }
 
-  printf( "Processing\n");
+  printf( "Processing\n" );
   
   state = getRaw( input_file );
   switch( state )
@@ -637,7 +692,27 @@ int main( int argc, char* argv[] )
       return EXIT_FAILURE;
   }
 
-  if( ( ( table_size % 2) != 0 ) && wordmode )
+  if( adpcm_enabled )
+  {
+    size_t frame_bytes = 1;
+
+    if( channelmode == MODE_STEREO )
+    {
+      frame_bytes = ( wordmode == 1 ) ? 4 : 2;
+    }
+    else if( wordmode == 1 )
+    {
+      frame_bytes = 2;
+    }
+
+    if( ( table_size % (off_t)frame_bytes ) != 0 )
+    {
+      fprintf( stderr, "Error: ADPCM input size must align to %zu-byte %s frame size.\n",
+               frame_bytes, ( channelmode == MODE_STEREO ) ? "stereo" : "mono" );
+      return EXIT_FAILURE;
+    }
+  }
+  else if( ( ( table_size % 2) != 0 ) && wordmode )
   {
     // Pad odd byte counts to form complete uint16_t pairs.
     if( pad_enabled )
@@ -663,8 +738,47 @@ int main( int argc, char* argv[] )
     }
   } 
 
+
+  // If ADPCM is enabled, encode and replace rawdata_p
+  if (adpcm_enabled) {
+    size_t adpcm_size = 0;
+    int is16bit = 0;
+    size_t num_samples = table_size;
+    if (table_size % 2 == 0 && wordmode == 1) {
+      if( bigendian == 1 )
+      {
+        // Convert big-endian 16-bit PCM bytes to host-endian int16_t samples.
+        for( off_t i = 0; i < table_size; i += 2 )
+        {
+          int8_t temp = rawdata_p[i];
+          rawdata_p[i] = rawdata_p[i + 1];
+          rawdata_p[i + 1] = temp;
+        }
+      }
+
+      // -16/-b16 indicates 16-bit PCM input for ADPCM mode.
+      is16bit = 1;
+      num_samples = table_size / 2;
+    }
+
+    int channels = ( channelmode == MODE_STEREO ) ? 2 : 1;
+    uint8_t* adpcm_data = encode_ima_adpcm(rawdata_p, num_samples, is16bit,
+                         channels, &adpcm_size);
+    if (!adpcm_data) {
+      fprintf(stderr, "Error: failed to encode IMA ADPCM.\n");
+      free(rawdata_p);
+      rawdata_p = 0;
+      return EXIT_FAILURE;
+    }
+    free(rawdata_p);
+    rawdata_p = (int8_t*)adpcm_data;
+    table_size = adpcm_size;
+  }
+
   // Write the output file.
-  if( wordmode == 0 )
+  if (adpcm_enabled)
+    state = writeFile(output_file, varname); // Output as uint8_t array
+  else if( wordmode == 0 )
     state = writeFile( output_file, varname );
   else
     state = writeFile16( output_file, varname );

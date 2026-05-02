@@ -64,6 +64,7 @@ CMAKE_BINARY_DIR = /home/jennifer/repos/raw2header/build
 
 # The main recursive "all" target.
 all: CMakeFiles/raw2header.dir/all
+all: CMakeFiles/test_adpcm.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -72,6 +73,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/raw2header.dir/clean
+clean: CMakeFiles/test_adpcm.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -81,12 +83,12 @@ clean: CMakeFiles/raw2header.dir/clean
 CMakeFiles/raw2header.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=1,2 "Built target raw2header"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=1,2,3 "Built target raw2header"
 .PHONY : CMakeFiles/raw2header.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/raw2header.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jennifer/repos/raw2header/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jennifer/repos/raw2header/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/raw2header.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jennifer/repos/raw2header/build/CMakeFiles 0
 .PHONY : CMakeFiles/raw2header.dir/rule
@@ -99,6 +101,32 @@ raw2header: CMakeFiles/raw2header.dir/rule
 CMakeFiles/raw2header.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/clean
 .PHONY : CMakeFiles/raw2header.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_adpcm.dir
+
+# All Build rule for target.
+CMakeFiles/test_adpcm.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=4,5,6 "Built target test_adpcm"
+.PHONY : CMakeFiles/test_adpcm.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_adpcm.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jennifer/repos/raw2header/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_adpcm.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jennifer/repos/raw2header/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_adpcm.dir/rule
+
+# Convenience name for target.
+test_adpcm: CMakeFiles/test_adpcm.dir/rule
+.PHONY : test_adpcm
+
+# clean rule for target.
+CMakeFiles/test_adpcm.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/clean
+.PHONY : CMakeFiles/test_adpcm.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

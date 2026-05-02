@@ -2,13 +2,34 @@
 
 ### Takes in any file, spits out a header file.
 
-Current version: V2.01.1
+Current version: V3.00.1
 
 Why did I create this... It is because I wanted a tool to help me with embedding data (mostly sound samples) into my projects FLASH in a way that suited my needs.  I don't know if there is an equivalent tool but it was fun to produce and that was excuse enough.  I didn't take the project too seriously and as such it did need some cleanup, but it is doing what it needs to and I will revisit it as and when the interest takes hold of me.
 
 The first parameter can be --mono/-m or --stereo/-s to emit a mode define in the output header.
 Then you can use -16 to generate a 16 bit per entry little-endian header file or -b16 for the same in big-endian.
 Then you specify the input filename, the output filename, and lastly the variable name you want in your header file.
+
+Usage:
+- raw2header [--mono|-m|--stereo|-s] [-16|-b16] [--adpcm|-a|-a16|-ab16] <input_file> <output_file> <varname>
+
+For ADPCM output (--adpcm/-a), the generated array is always uint8_t. In this mode, -16 and -b16 select 16-bit PCM input endianness.
+ADPCM now supports both --mono/-m and --stereo/-s input modes.
+Stereo input is expected to be interleaved frames (L, R, L, R, ...).
+
+For convenience, one-step flags are also supported:
+- -a16 / --adpcm16: ADPCM output with 16-bit little-endian PCM input
+- -ab16 / --adpcm16be: ADPCM output with 16-bit big-endian PCM input
+
+Examples:
+- 8-bit PCM mono to ADPCM: `raw2header -a -m input.raw output.h sample`
+- 8-bit PCM stereo (interleaved) to ADPCM: `raw2header -a -s input.raw output.h sample`
+- 16-bit PCM little-endian mono to ADPCM: `raw2header -a16 -m input.raw output.h sample`
+- 16-bit PCM big-endian stereo to ADPCM: `raw2header -ab16 -s input.raw output.h sample`
+
+Switch combination notes:
+- Combined short single-letter flags are supported (for example `-am`, `-ma`, `-as`, `-sa`).
+- Mixed compact forms with numeric flags are not supported (for example `-a16s`); use separate tokens like `-a16 -s`.
 
 Take note that if you have an odd number of bytes, it'll complain.  I am considering it offering a 0 to even up the data as an option.
 
