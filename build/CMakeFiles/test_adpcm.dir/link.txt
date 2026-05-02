@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/test_adpcm.dir/test_adpcm.c.o CMakeFiles/test_adpcm.dir/adpcm.c.o -o test_adpcm  -lm 
+/usr/bin/cc -g CMakeFiles/test_adpcm.dir/test_adpcm.c.o CMakeFiles/test_adpcm.dir/adpcm.c.o -o test_adpcm  -lm 

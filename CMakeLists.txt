@@ -1,6 +1,10 @@
 cmake_minimum_required( VERSION 3.22 )
 project( raw2header )
 
+if( CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR )
+	message( FATAL_ERROR "In-source builds are not supported. Use: cmake --preset dev" )
+endif()
+
 include( GNUInstallDirs )
 
 if( CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT

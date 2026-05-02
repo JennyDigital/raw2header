@@ -1,26 +1,26 @@
 [
 {
   "directory": "/home/jennifer/repos/raw2header/build",
-  "command": "/usr/bin/gcc-12 -g -o CMakeFiles/raw2header.dir/raw2header.c.o -c /home/jennifer/repos/raw2header/raw2header.c",
+  "command": "/usr/bin/cc   -g -o CMakeFiles/raw2header.dir/raw2header.c.o -c /home/jennifer/repos/raw2header/raw2header.c",
   "file": "/home/jennifer/repos/raw2header/raw2header.c",
-  "output": "/home/jennifer/repos/raw2header/build/CMakeFiles/raw2header.dir/raw2header.c.o"
+  "output": "CMakeFiles/raw2header.dir/raw2header.c.o"
 },
 {
   "directory": "/home/jennifer/repos/raw2header/build",
-  "command": "/usr/bin/gcc-12 -g -o CMakeFiles/raw2header.dir/adpcm.c.o -c /home/jennifer/repos/raw2header/adpcm.c",
+  "command": "/usr/bin/cc   -g -o CMakeFiles/raw2header.dir/adpcm.c.o -c /home/jennifer/repos/raw2header/adpcm.c",
   "file": "/home/jennifer/repos/raw2header/adpcm.c",
-  "output": "/home/jennifer/repos/raw2header/build/CMakeFiles/raw2header.dir/adpcm.c.o"
+  "output": "CMakeFiles/raw2header.dir/adpcm.c.o"
 },
 {
   "directory": "/home/jennifer/repos/raw2header/build",
-  "command": "/usr/bin/gcc-12 -g -o CMakeFiles/test_adpcm.dir/test_adpcm.c.o -c /home/jennifer/repos/raw2header/test_adpcm.c",
+  "command": "/usr/bin/cc   -g -o CMakeFiles/test_adpcm.dir/test_adpcm.c.o -c /home/jennifer/repos/raw2header/test_adpcm.c",
   "file": "/home/jennifer/repos/raw2header/test_adpcm.c",
-  "output": "/home/jennifer/repos/raw2header/build/CMakeFiles/test_adpcm.dir/test_adpcm.c.o"
+  "output": "CMakeFiles/test_adpcm.dir/test_adpcm.c.o"
 },
 {
   "directory": "/home/jennifer/repos/raw2header/build",
-  "command": "/usr/bin/gcc-12 -g -o CMakeFiles/test_adpcm.dir/adpcm.c.o -c /home/jennifer/repos/raw2header/adpcm.c",
+  "command": "/usr/bin/cc   -g -o CMakeFiles/test_adpcm.dir/adpcm.c.o -c /home/jennifer/repos/raw2header/adpcm.c",
   "file": "/home/jennifer/repos/raw2header/adpcm.c",
-  "output": "/home/jennifer/repos/raw2header/build/CMakeFiles/test_adpcm.dir/adpcm.c.o"
+  "output": "CMakeFiles/test_adpcm.dir/adpcm.c.o"
 }
 ]

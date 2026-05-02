@@ -1,1 +1,17 @@
 *.o
+
+# CMake build output
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/CTestTestfile.cmake
+/install_manifest.txt
+/compile_commands.json
+
+# Local build products
+/raw2header
+/test_adpcm
+
+# Editor caches
+/.cache/

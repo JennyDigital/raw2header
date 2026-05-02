@@ -33,4 +33,25 @@ Switch combination notes:
 
 Take note that if you have an odd number of bytes, it'll complain.  I am considering it offering a 0 to even up the data as an option.
 
+## Build (Portable: Linux + macOS)
+
+This project now uses an out-of-source CMake preset so build files are not tied to one machine's absolute paths.
+
+Requirements:
+- CMake 3.22+
+- A C compiler (clang or gcc)
+
+Configure and build:
+- `cmake --preset dev`
+- `cmake --build --preset dev`
+
+Run tests:
+- `ctest --preset dev`
+
+Install to `$HOME/.local` (default):
+- `cmake --build --preset dev --target install`
+
+If you previously built with a different CMake path or generator, remove stale outputs and reconfigure:
+- `rm -rf build CMakeFiles CMakeCache.txt cmake_install.cmake CTestTestfile.cmake install_manifest.txt Makefile`
+
 This builds on mac, or Linux for certain.  It should build on a Windows PC, but I don't have Windows on *any* of my computers.
