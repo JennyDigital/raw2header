@@ -12,7 +12,7 @@ if( CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT
 	set( CMAKE_INSTALL_PREFIX "$ENV{HOME}/.local" CACHE PATH "Install path prefix" FORCE )
 endif()
 
-set( SOURCES raw2header.c adpcm.c )
+set( SOURCES raw2header.c raw2header_cli.c raw2header_io.c adpcm.c )
 set( ADPCM_SOURCES adpcm.c )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} ${HEADERS} )
@@ -25,3 +25,6 @@ enable_testing()
 add_executable( test_adpcm test_adpcm.c ${ADPCM_SOURCES} )
 target_link_libraries( test_adpcm m )
 add_test( NAME ADPCM COMMAND test_adpcm )
+
+add_executable( test_source_pair test_source_pair.c raw2header_io.c )
+add_test( NAME SOURCE_PAIR COMMAND test_source_pair )

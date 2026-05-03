@@ -7,6 +7,18 @@
 },
 {
   "directory": "/home/jennifer/repos/raw2header/build",
+  "command": "/usr/bin/cc   -g -o CMakeFiles/raw2header.dir/raw2header_cli.c.o -c /home/jennifer/repos/raw2header/raw2header_cli.c",
+  "file": "/home/jennifer/repos/raw2header/raw2header_cli.c",
+  "output": "CMakeFiles/raw2header.dir/raw2header_cli.c.o"
+},
+{
+  "directory": "/home/jennifer/repos/raw2header/build",
+  "command": "/usr/bin/cc   -g -o CMakeFiles/raw2header.dir/raw2header_io.c.o -c /home/jennifer/repos/raw2header/raw2header_io.c",
+  "file": "/home/jennifer/repos/raw2header/raw2header_io.c",
+  "output": "CMakeFiles/raw2header.dir/raw2header_io.c.o"
+},
+{
+  "directory": "/home/jennifer/repos/raw2header/build",
   "command": "/usr/bin/cc   -g -o CMakeFiles/raw2header.dir/adpcm.c.o -c /home/jennifer/repos/raw2header/adpcm.c",
   "file": "/home/jennifer/repos/raw2header/adpcm.c",
   "output": "CMakeFiles/raw2header.dir/adpcm.c.o"
@@ -22,5 +34,17 @@
   "command": "/usr/bin/cc   -g -o CMakeFiles/test_adpcm.dir/adpcm.c.o -c /home/jennifer/repos/raw2header/adpcm.c",
   "file": "/home/jennifer/repos/raw2header/adpcm.c",
   "output": "CMakeFiles/test_adpcm.dir/adpcm.c.o"
+},
+{
+  "directory": "/home/jennifer/repos/raw2header/build",
+  "command": "/usr/bin/cc   -g -o CMakeFiles/test_source_pair.dir/test_source_pair.c.o -c /home/jennifer/repos/raw2header/test_source_pair.c",
+  "file": "/home/jennifer/repos/raw2header/test_source_pair.c",
+  "output": "CMakeFiles/test_source_pair.dir/test_source_pair.c.o"
+},
+{
+  "directory": "/home/jennifer/repos/raw2header/build",
+  "command": "/usr/bin/cc   -g -o CMakeFiles/test_source_pair.dir/raw2header_io.c.o -c /home/jennifer/repos/raw2header/raw2header_io.c",
+  "file": "/home/jennifer/repos/raw2header/raw2header_io.c",
+  "output": "CMakeFiles/test_source_pair.dir/raw2header_io.c.o"
 }
 ]

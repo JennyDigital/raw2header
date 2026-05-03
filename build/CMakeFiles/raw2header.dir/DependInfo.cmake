@@ -10,6 +10,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/jennifer/repos/raw2header/adpcm.c" "CMakeFiles/raw2header.dir/adpcm.c.o" "gcc" "CMakeFiles/raw2header.dir/adpcm.c.o.d"
   "/home/jennifer/repos/raw2header/raw2header.c" "CMakeFiles/raw2header.dir/raw2header.c.o" "gcc" "CMakeFiles/raw2header.dir/raw2header.c.o.d"
+  "/home/jennifer/repos/raw2header/raw2header_cli.c" "CMakeFiles/raw2header.dir/raw2header_cli.c.o" "gcc" "CMakeFiles/raw2header.dir/raw2header_cli.c.o.d"
+  "/home/jennifer/repos/raw2header/raw2header_io.c" "CMakeFiles/raw2header.dir/raw2header_io.c.o" "gcc" "CMakeFiles/raw2header.dir/raw2header_io.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

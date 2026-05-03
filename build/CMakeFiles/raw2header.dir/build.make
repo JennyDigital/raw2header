@@ -83,10 +83,38 @@ CMakeFiles/raw2header.dir/raw2header.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/raw2header.dir/raw2header.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/jennifer/repos/raw2header/raw2header.c -o CMakeFiles/raw2header.dir/raw2header.c.s
 
+CMakeFiles/raw2header.dir/raw2header_cli.c.o: CMakeFiles/raw2header.dir/flags.make
+CMakeFiles/raw2header.dir/raw2header_cli.c.o: /home/jennifer/repos/raw2header/raw2header_cli.c
+CMakeFiles/raw2header.dir/raw2header_cli.c.o: CMakeFiles/raw2header.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/raw2header.dir/raw2header_cli.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/raw2header.dir/raw2header_cli.c.o -MF CMakeFiles/raw2header.dir/raw2header_cli.c.o.d -o CMakeFiles/raw2header.dir/raw2header_cli.c.o -c /home/jennifer/repos/raw2header/raw2header_cli.c
+
+CMakeFiles/raw2header.dir/raw2header_cli.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/raw2header.dir/raw2header_cli.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/jennifer/repos/raw2header/raw2header_cli.c > CMakeFiles/raw2header.dir/raw2header_cli.c.i
+
+CMakeFiles/raw2header.dir/raw2header_cli.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/raw2header.dir/raw2header_cli.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/jennifer/repos/raw2header/raw2header_cli.c -o CMakeFiles/raw2header.dir/raw2header_cli.c.s
+
+CMakeFiles/raw2header.dir/raw2header_io.c.o: CMakeFiles/raw2header.dir/flags.make
+CMakeFiles/raw2header.dir/raw2header_io.c.o: /home/jennifer/repos/raw2header/raw2header_io.c
+CMakeFiles/raw2header.dir/raw2header_io.c.o: CMakeFiles/raw2header.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/raw2header.dir/raw2header_io.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/raw2header.dir/raw2header_io.c.o -MF CMakeFiles/raw2header.dir/raw2header_io.c.o.d -o CMakeFiles/raw2header.dir/raw2header_io.c.o -c /home/jennifer/repos/raw2header/raw2header_io.c
+
+CMakeFiles/raw2header.dir/raw2header_io.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/raw2header.dir/raw2header_io.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/jennifer/repos/raw2header/raw2header_io.c > CMakeFiles/raw2header.dir/raw2header_io.c.i
+
+CMakeFiles/raw2header.dir/raw2header_io.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/raw2header.dir/raw2header_io.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/jennifer/repos/raw2header/raw2header_io.c -o CMakeFiles/raw2header.dir/raw2header_io.c.s
+
 CMakeFiles/raw2header.dir/adpcm.c.o: CMakeFiles/raw2header.dir/flags.make
 CMakeFiles/raw2header.dir/adpcm.c.o: /home/jennifer/repos/raw2header/adpcm.c
 CMakeFiles/raw2header.dir/adpcm.c.o: CMakeFiles/raw2header.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/raw2header.dir/adpcm.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/raw2header.dir/adpcm.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/raw2header.dir/adpcm.c.o -MF CMakeFiles/raw2header.dir/adpcm.c.o.d -o CMakeFiles/raw2header.dir/adpcm.c.o -c /home/jennifer/repos/raw2header/adpcm.c
 
 CMakeFiles/raw2header.dir/adpcm.c.i: cmake_force
@@ -100,16 +128,20 @@ CMakeFiles/raw2header.dir/adpcm.c.s: cmake_force
 # Object files for target raw2header
 raw2header_OBJECTS = \
 "CMakeFiles/raw2header.dir/raw2header.c.o" \
+"CMakeFiles/raw2header.dir/raw2header_cli.c.o" \
+"CMakeFiles/raw2header.dir/raw2header_io.c.o" \
 "CMakeFiles/raw2header.dir/adpcm.c.o"
 
 # External object files for target raw2header
 raw2header_EXTERNAL_OBJECTS =
 
 raw2header: CMakeFiles/raw2header.dir/raw2header.c.o
+raw2header: CMakeFiles/raw2header.dir/raw2header_cli.c.o
+raw2header: CMakeFiles/raw2header.dir/raw2header_io.c.o
 raw2header: CMakeFiles/raw2header.dir/adpcm.c.o
 raw2header: CMakeFiles/raw2header.dir/build.make
 raw2header: CMakeFiles/raw2header.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable raw2header"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/jennifer/repos/raw2header/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable raw2header"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/raw2header.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

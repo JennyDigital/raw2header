@@ -1,5 +1,6 @@
 /home/jennifer/repos/raw2header/build/CMakeFiles/raw2header.dir
 /home/jennifer/repos/raw2header/build/CMakeFiles/test_adpcm.dir
+/home/jennifer/repos/raw2header/build/CMakeFiles/test_source_pair.dir
 /home/jennifer/repos/raw2header/build/CMakeFiles/test.dir
 /home/jennifer/repos/raw2header/build/CMakeFiles/edit_cache.dir
 /home/jennifer/repos/raw2header/build/CMakeFiles/rebuild_cache.dir

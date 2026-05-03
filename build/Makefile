@@ -197,6 +197,19 @@ test_adpcm/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/build
 .PHONY : test_adpcm/fast
 
+#=============================================================================
+# Target rules for targets named test_source_pair
+
+# Build rule for target.
+test_source_pair: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_source_pair
+.PHONY : test_source_pair
+
+# fast build rule for target.
+test_source_pair/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_source_pair.dir/build.make CMakeFiles/test_source_pair.dir/build
+.PHONY : test_source_pair/fast
+
 adpcm.o: adpcm.c.o
 .PHONY : adpcm.o
 
@@ -248,6 +261,57 @@ raw2header.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/raw2header.c.s
 .PHONY : raw2header.c.s
 
+raw2header_cli.o: raw2header_cli.c.o
+.PHONY : raw2header_cli.o
+
+# target to build an object file
+raw2header_cli.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/raw2header_cli.c.o
+.PHONY : raw2header_cli.c.o
+
+raw2header_cli.i: raw2header_cli.c.i
+.PHONY : raw2header_cli.i
+
+# target to preprocess a source file
+raw2header_cli.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/raw2header_cli.c.i
+.PHONY : raw2header_cli.c.i
+
+raw2header_cli.s: raw2header_cli.c.s
+.PHONY : raw2header_cli.s
+
+# target to generate assembly for a file
+raw2header_cli.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/raw2header_cli.c.s
+.PHONY : raw2header_cli.c.s
+
+raw2header_io.o: raw2header_io.c.o
+.PHONY : raw2header_io.o
+
+# target to build an object file
+raw2header_io.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/raw2header_io.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_source_pair.dir/build.make CMakeFiles/test_source_pair.dir/raw2header_io.c.o
+.PHONY : raw2header_io.c.o
+
+raw2header_io.i: raw2header_io.c.i
+.PHONY : raw2header_io.i
+
+# target to preprocess a source file
+raw2header_io.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/raw2header_io.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_source_pair.dir/build.make CMakeFiles/test_source_pair.dir/raw2header_io.c.i
+.PHONY : raw2header_io.c.i
+
+raw2header_io.s: raw2header_io.c.s
+.PHONY : raw2header_io.s
+
+# target to generate assembly for a file
+raw2header_io.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raw2header.dir/build.make CMakeFiles/raw2header.dir/raw2header_io.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_source_pair.dir/build.make CMakeFiles/test_source_pair.dir/raw2header_io.c.s
+.PHONY : raw2header_io.c.s
+
 test_adpcm.o: test_adpcm.c.o
 .PHONY : test_adpcm.o
 
@@ -272,6 +336,30 @@ test_adpcm.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_adpcm.dir/build.make CMakeFiles/test_adpcm.dir/test_adpcm.c.s
 .PHONY : test_adpcm.c.s
 
+test_source_pair.o: test_source_pair.c.o
+.PHONY : test_source_pair.o
+
+# target to build an object file
+test_source_pair.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_source_pair.dir/build.make CMakeFiles/test_source_pair.dir/test_source_pair.c.o
+.PHONY : test_source_pair.c.o
+
+test_source_pair.i: test_source_pair.c.i
+.PHONY : test_source_pair.i
+
+# target to preprocess a source file
+test_source_pair.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_source_pair.dir/build.make CMakeFiles/test_source_pair.dir/test_source_pair.c.i
+.PHONY : test_source_pair.c.i
+
+test_source_pair.s: test_source_pair.c.s
+.PHONY : test_source_pair.s
+
+# target to generate assembly for a file
+test_source_pair.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_source_pair.dir/build.make CMakeFiles/test_source_pair.dir/test_source_pair.c.s
+.PHONY : test_source_pair.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -287,15 +375,25 @@ help:
 	@echo "... test"
 	@echo "... raw2header"
 	@echo "... test_adpcm"
+	@echo "... test_source_pair"
 	@echo "... adpcm.o"
 	@echo "... adpcm.i"
 	@echo "... adpcm.s"
 	@echo "... raw2header.o"
 	@echo "... raw2header.i"
 	@echo "... raw2header.s"
+	@echo "... raw2header_cli.o"
+	@echo "... raw2header_cli.i"
+	@echo "... raw2header_cli.s"
+	@echo "... raw2header_io.o"
+	@echo "... raw2header_io.i"
+	@echo "... raw2header_io.s"
 	@echo "... test_adpcm.o"
 	@echo "... test_adpcm.i"
 	@echo "... test_adpcm.s"
+	@echo "... test_source_pair.o"
+	@echo "... test_source_pair.i"
+	@echo "... test_source_pair.s"
 .PHONY : help
 
 
