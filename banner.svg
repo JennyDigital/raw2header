@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="pageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#e94560" />
+    </marker>
+    <filter id="yellowGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feFlood flood-color="#ffdd00" flood-opacity="0.8" result="glowColor"/>
+      <feComposite in="glowColor" in2="coloredBlur" operator="in" result="softGlow"/>
+      <feMerge>
+        <feMergeNode in="softGlow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="200" fill="url(#bg)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#e94560" text-anchor="middle">raw2header</text>
+
+  <!-- Input page (raw data) -->
+  <rect x="150" y="50" width="120" height="130" fill="url(#pageGrad)" rx="4" stroke="#333" stroke-width="1"/>
+  <text x="210" y="75" font-family="monospace" font-size="11" fill="#333" text-anchor="middle" font-weight="bold">RAW</text>
+  <line x1="160" y1="82" x2="260" y2="82" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Numbers on input page -->
+  <text x="165" y="100" font-family="monospace" font-size="9" fill="#666">0x45</text>
+  <text x="165" y="112" font-family="monospace" font-size="9" fill="#666">0x91</text>
+  <text x="165" y="124" font-family="monospace" font-size="9" fill="#666">0xAB</text>
+  <text x="165" y="136" font-family="monospace" font-size="9" fill="#666">0x23</text>
+  <text x="165" y="148" font-family="monospace" font-size="9" fill="#666">0x67</text>
+  <text x="165" y="160" font-family="monospace" font-size="9" fill="#666">0xEF</text>
+
+  <!-- Flowing numbers animation area -->
+  <g>
+    <text x="300" y="95" font-family="monospace" font-size="10" fill="#e94560" opacity="0.9">0x45</text>
+    <text x="330" y="110" font-family="monospace" font-size="10" fill="#e94560" opacity="0.7">0x91</text>
+    <text x="310" y="125" font-family="monospace" font-size="10" fill="#e94560" opacity="0.8">0xAB</text>
+    <text x="325" y="140" font-family="monospace" font-size="10" fill="#e94560" opacity="0.6">0x23</text>
+    <text x="315" y="155" font-family="monospace" font-size="10" fill="#e94560" opacity="0.75">0x67</text>
+  </g>
+
+  <!-- Arrow -->
+  <path d="M 285 115 L 415 115" stroke="#e94560" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+  <!-- Output page (.h header) -->
+  <rect x="420" y="50" width="120" height="130" fill="url(#pageGrad)" rx="4" stroke="#333" stroke-width="1" filter="url(#yellowGlow)"/>
+  <text x="480" y="75" font-family="monospace" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#yellowGlow)">.h</text>
+  <line x1="430" y1="82" x2="530" y2="82" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Header content -->
+  <text x="435" y="100" font-family="monospace" font-size="8" fill="#666">#ifndef</text>
+  <text x="435" y="112" font-family="monospace" font-size="8" fill="#666">#define</text>
+  <text x="435" y="124" font-family="monospace" font-size="8" fill="#666">0x45,0x91,</text>
+  <text x="435" y="136" font-family="monospace" font-size="8" fill="#666">0xAB,0x23,</text>
+  <text x="435" y="148" font-family="monospace" font-size="8" fill="#666">0x67,0xEF,</text>
+  <text x="435" y="160" font-family="monospace" font-size="8" fill="#666">...</text>
+
+  <!-- Plus more flowing numbers to right side -->
+  <g>
+    <text x="550" y="90" font-family="monospace" font-size="9" fill="#e94560" opacity="0.5">0x12</text>
+    <text x="560" y="105" font-family="monospace" font-size="9" fill="#e94560" opacity="0.4">0x34</text>
+    <text x="555" y="120" font-family="monospace" font-size="9" fill="#e94560" opacity="0.6">0x56</text>
+    <text x="565" y="135" font-family="monospace" font-size="9" fill="#e94560" opacity="0.3">0x78</text>
+  </g>
+
+  <!-- Small decoration dots -->
+  <circle cx="620" cy="60" r="3" fill="#e94560" opacity="0.3"/>
+  <circle cx="640" cy="75" r="2" fill="#e94560" opacity="0.2"/>
+  <circle cx="630" cy="90" r="2.5" fill="#e94560" opacity="0.25"/>
+  <circle cx="650" cy="110" r="2" fill="#e94560" opacity="0.2"/>
+  <circle cx="635" cy="130" r="3" fill="#e94560" opacity="0.3"/>
+</svg>

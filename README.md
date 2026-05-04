@@ -1,4 +1,4 @@
-# raw2header
+![raw2header banner](banner.svg)
 
 ### Takes in any file, spits out a header file.
 
