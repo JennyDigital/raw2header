@@ -28,6 +28,7 @@ extern uint8_t pad_enabled;
 extern uint8_t pad_value;
 extern uint8_t adpcm_enabled;
 extern uint8_t sourcepair_enabled;
+extern char g_generated_with[256];
 
 off_t getFileSize( char* file_to_size );
 int getRaw( char* input_file );

@@ -14,7 +14,7 @@ static int parsePadFlag( const char* arg );
   */
 void printUsage( void )
 {
-  printf( "\nraw2header file convertion utility V3.01.0\n\n" );
+  printf( "\nraw2header file convertion utility V3.02.0\n\n" );
   printf( "Written in 2024, by Jennifer Gunn.\n\n" );
   printf( "Takes the input file and converts it to a header file.\n\n" );
   printf( "Usage: raw2header [--mono|-m|--stereo|-s] [-16/-b16] [--adpcm|-a|-a16|-ab16] [--source-pair|--split-c|-c] <input_file> <output_file> <varname>\n" );
@@ -46,9 +46,19 @@ static int parseCombinedShortFlags( const char* arg )
     switch( *shortflags )
     {
       case 'm':
+        if( channelmode == MODE_STEREO )
+        {
+          fprintf( stderr, "Error: conflicting flags -m (mono) and -s (stereo).\n" );
+          return -1;
+        }
         channelmode = MODE_MONO;
         break;
       case 's':
+        if( channelmode == MODE_MONO )
+        {
+          fprintf( stderr, "Error: conflicting flags -m (mono) and -s (stereo).\n" );
+          return -1;
+        }
         channelmode = MODE_STEREO;
         break;
       case 'a':
@@ -197,18 +207,39 @@ int parseArgs( int argc, char** argv, char** input, char** output, char** varnam
         switch( options[ option ].action )
         {
           case OPT_WORD_LE:
+            if( wordmode && bigendian )
+            {
+              fprintf( stderr, "Error: conflicting flags -16 and -b16.\n" );
+              return -1;
+            }
             wordmode = 1;
+            bigendian = 0;
             break;
           case OPT_WORD_BE:
+            if( wordmode && !bigendian )
+            {
+              fprintf( stderr, "Error: conflicting flags -16 and -b16.\n" );
+              return -1;
+            }
             wordmode = 1;
             bigendian = 1;
             break;
           case OPT_HELP:
             return 1;
           case OPT_MONO:
+            if( channelmode == MODE_STEREO )
+            {
+              fprintf( stderr, "Error: conflicting flags --mono and --stereo.\n" );
+              return -1;
+            }
             channelmode = MODE_MONO;
             break;
           case OPT_STEREO:
+            if( channelmode == MODE_MONO )
+            {
+              fprintf( stderr, "Error: conflicting flags --mono and --stereo.\n" );
+              return -1;
+            }
             channelmode = MODE_STEREO;
             break;
           case OPT_ADPCM:

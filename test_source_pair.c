@@ -17,6 +17,7 @@ uint8_t pad_enabled = 0;
 uint8_t pad_value = 0;
 uint8_t adpcm_enabled = 0;
 uint8_t sourcepair_enabled = 0;
+char    g_generated_with[256] = "";
 
 static int load_text_file( const char* path, char* buf, size_t buf_sz )
 {

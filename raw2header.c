@@ -19,6 +19,7 @@ uint8_t   pad_enabled       = 0;
 uint8_t   pad_value         = 0;
 uint8_t   adpcm_enabled     = 0;
 uint8_t   sourcepair_enabled = 0;
+char      g_generated_with[256] = "";
 
 static int normalizeOutputHeaderPath( const char* input_path, char* output_path, size_t output_path_sz )
 {
@@ -72,6 +73,18 @@ int main( int argc, char* argv[] )
   {
     printUsage();
     return EXIT_FAILURE;
+  }
+
+  // Build switches string for header comment
+  g_generated_with[0] = '\0';
+  for( int i = 1; i < argc - 3; i++ )
+  {
+    strncat( g_generated_with, argv[i], sizeof( g_generated_with ) - strlen( g_generated_with ) - 1 );
+    strncat( g_generated_with, " ", sizeof( g_generated_with ) - strlen( g_generated_with ) - 1 );
+  }
+  {
+    size_t len = strlen( g_generated_with );
+    if( len > 0 ) g_generated_with[ len - 1 ] = '\0';
   }
 
   if( normalizeOutputHeaderPath( output_file, normalized_output_file, sizeof( normalized_output_file ) ) != 0 )
