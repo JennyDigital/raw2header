@@ -134,7 +134,7 @@ int writeFile( char* output_file, char* varname )
                ( channelmode == MODE_MONO ) ? "mono" : "stereo" );
     }
   }
-  fprintf( headerfile_p, "#define %s_SZ %li\n\n", outp_header_name, table_size );
+  fprintf( headerfile_p, "#define %s_SZ %lli\n\n", outp_header_name, ( long long )table_size );
 
   if( sourcepair_enabled )
   {
@@ -313,7 +313,7 @@ int writeFile16( char* output_file, char* varname )
                ( channelmode == MODE_MONO ) ? "mono" : "stereo" );
     }
   }
-  fprintf( headerfile_p, "#define %s_SZ %li\n\n", outp_header_name, table_size / 2 );
+  fprintf( headerfile_p, "#define %s_SZ %lli\n\n", outp_header_name, ( long long )( table_size / 2 ) );
 
   if( sourcepair_enabled )
   {
@@ -476,14 +476,14 @@ int getRaw( char* input_file )
   }
   else
   {
-    printf( "Size of input file: %li\n", table_size );
+    printf( "Size of input file: %lli\n", ( long long )table_size );
   }
 
   rawdata_p = malloc( table_size );
 
   if( rawdata_p == 0 )
   {
-    fprintf( stderr, "Error: failed to allocate %li bytes.\n", table_size );
+    fprintf( stderr, "Error: failed to allocate %lli bytes.\n", ( long long )table_size );
     return NO_MALLOC;
   }
   rawfile_p = fopen( input_file, "rb" );
